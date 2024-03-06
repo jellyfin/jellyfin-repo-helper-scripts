@@ -8,6 +8,7 @@ SUPPORTED_DEBIAN_RELEASES='@(buster|bullseye|bookworm)'
 SUPPORTED_UBUNTU_RELEASES='@(bionic|cosmic|disco|eoan|focal|groovy|hirsute|impish|jammy|kinetic|lunar|mantic)'
 
 SCRIPT_URL="https://repo.jellyfin.org/install-debuntu.sh"
+GPG_KEY_URL="https://repo.jellyfin.org/jellyfin_team.gpg.key"
 DOWNLOADS_URL="https://jellyfin.org/downloads/server"
 CONTACT_URL="https://jellyfin.org/contact"
 
@@ -176,7 +177,7 @@ fi
 
 # Download our repository signing key and install it to the keyring directory
 echo "> Fetching repository signing key."
-$FETCH https://repo.jellyfin.org/jellyfin_team.gpg.key | gpg --dearmor --yes --output /etc/apt/keyrings/jellyfin.gpg
+$FETCH ${GPG_KEY_URL} | gpg --dearmor --yes --output /etc/apt/keyrings/jellyfin.gpg
 # shellcheck disable=SC2181
 # We don't want to explicitly include the command in the 'if' for readibility
 if [[ $? -gt 0 ]]; then
