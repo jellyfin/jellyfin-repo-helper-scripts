@@ -7,7 +7,7 @@ SUPPORTED_ARCHITECTURES='@(amd64|armhf|arm64)'
 SUPPORTED_DEBIAN_RELEASES='@(buster|bullseye|bookworm)'
 SUPPORTED_UBUNTU_RELEASES='@(bionic|cosmic|disco|eoan|focal|groovy|hirsute|impish|jammy|kinetic|lunar|mantic)'
 
-SCRIPT_URL="https://repo.jellyfin.org/files/install-debuntu.sh"
+SCRIPT_URL="https://repo.jellyfin.org/install-debuntu.sh"
 DOWNLOADS_URL="https://jellyfin.org/downloads/server"
 CONTACT_URL="https://jellyfin.org/contact"
 
