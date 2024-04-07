@@ -108,15 +108,15 @@ case "${REPO_OS}" in
         YELLOW='\033[0;33m'
         NC='\033[0m' # No Color
         echo -e "${YELLOW}WARNING${NC}: Autodetection of base OS and version failed."
-        echo -e "To continue, please enter:"
+        echo -e "To continue, please enter the following as 'Repo OS' and 'Repo Release', respectively::"
         echo -e "  (1) The upsteam distribution of your current distro (either 'debian' or 'ubuntu')."
-        echo -e "  (2) The closest upstream release codename of your current distro (Debian stable name e.g. 'bookworm' or Ubuntu LTS name e.g. 'focal')."
-        echo -e "If you do not know this information, please consult your distribution's documentation, or try the latest Ubuntu LTS version."
+        echo -e "  (2) The closest upstream release codename of your current distro ('bookworm', 'focal', etc.)."
+        echo -e "If you do not know, please consult your distribution's documentation, or try the latest Ubuntu LTS details."
         echo
-        echo -en "Base distribution: "
-        read -r REPO_OS
-        echo -en "Base codename: "
-        read -r VERSION
+        echo -en "Repo OS: "
+        read -r REPO_OS < /dev/tty
+        echo -en "Repo Release: "
+        read -r VERSION < /dev/tty
     ;;
 esac
 
