@@ -85,6 +85,7 @@ case "${REPO_OS}" in
             ;;
             *)
                 echo "ERROR: We don't support the Debian codename '${VERSION}' with this script."
+                echo "Note: We only support stable versions of Debian."
                 echo "Please consider a Docker-based or manual install instead: ${DOWNLOADS_URL}"
                 exit 1
             ;;
@@ -99,6 +100,7 @@ case "${REPO_OS}" in
             ;;
             *)
                 echo "ERROR: We don't support the Ubuntu codename '${VERSION}' with this script."
+                echo "Note: We only support LTS versions of Ubuntu."
                 echo "Please consider a Docker-based or manual install instead: ${DOWNLOADS_URL}"
                 exit 1
             ;;
