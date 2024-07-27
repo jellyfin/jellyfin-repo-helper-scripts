@@ -257,7 +257,7 @@ GATEWAY_IFACE="$( ip route \
                   | grep -o 'dev [a-z0-9]* ' \
                   | awk '{ print $NF }' )"
 IP_ADDRESS="$( ip address show dev "${GATEWAY_IFACE}" \
-               | grep -w "inet .* scope global ${GATEWAY_IFACE}$" \
+               | grep -w "inet .* ${GATEWAY_IFACE}$" \
                | awk '{ print $2 }' \
                | awk -F '/' '{ print $1 }' )"
 
