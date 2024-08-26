@@ -229,6 +229,8 @@ echo
 # Install Jellyfin using the metapackage (which will fetch jellyfin-server, jellyfin-web, and jellyfin-ffmpeg[5]
 echo "> Installing Jellyfin."
 apt install --yes jellyfin
+# Works around https://github.com/jellyfin/jellyfin-packaging/issues/37 for now
+chown -R jellyfin:adm /etc/jellyfin
 # shellcheck disable=SC2181
 # We don't want to explicitly include the command in the 'if' for readibility
 if [[ $? -gt 0 ]]; then
