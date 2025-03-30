@@ -150,7 +150,7 @@ if [[ -n ${CURL} ]]; then
 elif [[ -n ${WGET} ]]; then
     FETCH="${WGET} -O-"
 else
-    echo "Failed to find a suitable download program. We're not sure how you dowloaded this script, but we'll install 'curl' automatically."
+    echo "Failed to find a suitable download program. We're not sure how you downloaded this script, but we'll install 'curl' automatically."
     # shellcheck disable=SC2206
     # We are OK with word-splitting here since we control the contents
     INSTALL_PKGS=( ${INSTALL_PKGS[@]} curl )
@@ -189,7 +189,7 @@ fi
 echo "> Fetching repository signing key."
 $FETCH ${GPG_KEY_URL} | gpg --dearmor --yes --output /etc/apt/keyrings/jellyfin.gpg
 # shellcheck disable=SC2181
-# We don't want to explicitly include the command in the 'if' for readibility
+# We don't want to explicitly include the command in the 'if' for readability
 if [[ $? -gt 0 ]]; then
     echo "ERROR: Failed to install key. Use ${CONTACT_URL} to find us for troubleshooting."
     exit 1
@@ -219,7 +219,7 @@ echo
 echo "> Updating APT repositories."
 apt update
 # shellcheck disable=SC2181
-# We don't want to explicitly include the command in the 'if' for readibility
+# We don't want to explicitly include the command in the 'if' for readability
 if [[ $? -gt 0 ]]; then
     echo "ERROR: Failed to update APT repositories. Something is wrong with your APT sources, GPG keys, or Internet connection. Try again shortly or use ${CONTACT_URL} to find us for troubleshooting."
     exit 1
@@ -232,7 +232,7 @@ apt install --yes jellyfin
 # Works around https://github.com/jellyfin/jellyfin-packaging/issues/37 for now
 chown -R jellyfin:adm /etc/jellyfin
 # shellcheck disable=SC2181
-# We don't want to explicitly include the command in the 'if' for readibility
+# We don't want to explicitly include the command in the 'if' for readability
 if [[ $? -gt 0 ]]; then
     echo "ERROR: Failed to install Jellyfin. Use ${CONTACT_URL} to find us for troubleshooting."
     exit 1
