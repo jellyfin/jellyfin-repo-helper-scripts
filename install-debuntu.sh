@@ -111,7 +111,7 @@ case "${REPO_OS}" in
         NC='\033[0m' # No Color
         echo -e "${YELLOW}WARNING${NC}: Autodetection of base OS and version failed."
         echo -e "To continue, please enter the following as 'Repo OS' and 'Repo Release', respectively::"
-        echo -e "  (1) The upsteam distribution of your current distro (either 'debian' or 'ubuntu')."
+        echo -e "  (1) The upstream distribution of your current distro (either 'debian' or 'ubuntu')."
         echo -e "  (2) The closest upstream release codename of your current distro ('bookworm', 'focal', etc.)."
         echo -e "If you do not know, please consult your distribution's documentation, or try the latest Ubuntu LTS details."
         echo
