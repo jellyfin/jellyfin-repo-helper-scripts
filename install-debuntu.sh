@@ -137,7 +137,10 @@ echo -en "If this looks correct, press <Enter> now to continue installing Jellyf
 # See https://stackoverflow.com/a/6562852/5253131
 # shellcheck disable=SC2162
 # We are OK with this read stripping backslashes, as it is just a pause and is discarded
-read < /dev/tty
+# Use SKIP_CONFIRM in the environment to skip this read check (PR#10)
+if [[ ! "${SKIP_CONFIRM,,}" =~ ^(true|1)$ ]]; then
+    read -r < /dev/tty
+fi
 
 echo
 
