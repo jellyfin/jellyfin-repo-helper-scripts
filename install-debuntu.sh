@@ -4,8 +4,8 @@ shopt -s extglob
 
 # Lists of supported architectures, Debian, and Ubuntu releases
 SUPPORTED_ARCHITECTURES='@(amd64|armhf|arm64)'
-SUPPORTED_DEBIAN_RELEASES='@(bullseye|bookworm)'
-SUPPORTED_UBUNTU_RELEASES='@(focal|jammy|noble)'
+SUPPORTED_DEBIAN_RELEASES='@(buster|bullseye|bookworm)'
+SUPPORTED_UBUNTU_RELEASES='@(bionic|cosmic|disco|eoan|focal|groovy|hirsute|impish|jammy|kinetic|lunar|mantic|noble)'
 
 SCRIPT_URL="https://repo.jellyfin.org/install-debuntu.sh"
 GPG_KEY_URL="https://repo.jellyfin.org/jellyfin_team.gpg.key"
@@ -133,7 +133,9 @@ echo -en "If this looks correct, press <Enter> now to continue installing Jellyf
 # See https://stackoverflow.com/a/6562852/5253131
 # shellcheck disable=SC2162
 # We are OK with this read stripping backslashes, as it is just a pause and is discarded
-read < /dev/tty
+if [[ ! "${SKIP_CONFIRM,,}" =~ ^(true|1)$ ]]; then
+    read -r < /dev/tty
+fi
 
 echo
 
