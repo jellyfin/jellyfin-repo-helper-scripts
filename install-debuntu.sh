@@ -194,6 +194,7 @@ if [[ $? -gt 0 ]]; then
     echo "ERROR: Failed to install key. Use ${CONTACT_URL} to find us for troubleshooting."
     exit 1
 fi
+chmod 644 /etc/apt/keyrings/jellyfin.gpg
 echo
 
 # Check for and remove the obsoleted jellyfin.list configuration if present
