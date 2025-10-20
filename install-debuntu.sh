@@ -126,6 +126,45 @@ case "${REPO_OS}" in
     ;;
 esac
 
+# Perform free space checks on default locations (`/var/lib/jellyfin` and `/tmp`)
+echo "> Checking for free space and known-problematic filesystem targets."
+read DATA_FREE DATA_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype /var/lib | tail -1 )"
+if [[ ${DATA_FREE} -lt $(( 2 * 1024 * 1024 )) ]]; then
+    echo "Insufficient free space for /var/lib/jellyfin: ${DATA_FREE}KB found, $(( 2 * 1024 * 1024 ))KB required"
+    echo
+    echo "Please free up space and try again."
+    exit 1
+else
+    echo ">> OK: Data directory has $(( ${DATA_FREE} / 1024 ))MB of available space."
+fi
+if [[ " nfs ceph " =~ " ${DATA_FSTYPE} " ]]; then
+    echo "ERROR: Data directory target is on network storage. This configuration is NOT SUPPORTED."
+    echo "Install Jellyfin manually and move your data directory target to a non-network filesystem."
+    exit 1
+elif [[ " zfs btrfs bcachefs " =~ " ${DATA_FSTYPE} " ]]; then
+    echo ">> WARNING: Data directory on COW storage. This is probably fine, but issues have been reported in the past."
+else
+    echo ">> OK: Data directory on ${DATA_FSTYPE}, this is supported."
+fi
+read TMP_FREE TMP_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype /tmp | tail -1 )"
+if [[ ${TMP_FREE} -lt $(( 2 * 1024 * 1024 )) ]]; then
+    echo "Insufficient free space for /tmp: ${TMP_FREE}KB found, $(( 2 * 1024 * 1024 ))KB required"
+    echo
+    echo "Please increase tmpfs size or free up space and try again."
+    exit 1
+else
+    echo ">> OK: Temporary directory has $(( ${TMP_FREE} / 1024 ))MB of available space."
+fi
+if [[ " nfs ceph " =~ " ${TMP_FSTYPE} " ]]; then
+    echo "ERROR: Temporary directory target is on network storage. This configuration is NOT SUPPORTED."
+    echo "Install Jellyfin manually and move your temporary directory target to a non-network filesystem."
+    exit 1
+elif [[ " zfs btrfs bcachefs " =~ " ${TMP_FSTYPE} " ]]; then
+    echo ">> WARNING: Temporary directory on COW storage. This is probably fine, but issues have been reported in the past."
+else
+    echo ">> OK: Temporary directory on ${TMP_FSTYPE}, this is supported."
+fi
+
 echo
 echo -e "Found the following details from '/etc/os-release':"
 echo -e "  Real OS:            ${BASE_OS}"
