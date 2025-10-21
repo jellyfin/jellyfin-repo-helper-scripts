@@ -141,6 +141,8 @@ if [[ " nfs ceph " =~ " ${DATA_FSTYPE} " ]]; then
     echo "ERROR: Data directory target is on network storage. This configuration is NOT SUPPORTED."
     echo "Install Jellyfin manually and move your data directory target to a non-network filesystem."
     exit 1
+elif [[ " zfs btrfs bcachefs " =~ " ${DATA_FSTYPE} " ]]; then
+    echo ">> WARNING: Data directory on COW storage. This is probably fine, but issues have been reported in the past."
 else
     echo ">> OK: Data directory on ${DATA_FSTYPE}, this is supported."
 fi
@@ -157,6 +159,8 @@ if [[ " nfs ceph " =~ " ${TMP_FSTYPE} " ]]; then
     echo "ERROR: Temporary directory target is on network storage. This configuration is NOT SUPPORTED."
     echo "Install Jellyfin manually and move your temporary directory target to a non-network filesystem."
     exit 1
+elif [[ " zfs btrfs bcachefs " =~ " ${TMP_FSTYPE} " ]]; then
+    echo ">> WARNING: Temporary directory on COW storage. This is probably fine, but issues have been reported in the past."
 else
     echo ">> OK: Temporary directory on ${TMP_FSTYPE}, this is supported."
 fi
