@@ -5,7 +5,7 @@ shopt -s extglob
 # Lists of supported architectures, Debian, and Ubuntu releases
 SUPPORTED_ARCHITECTURES='@(amd64|armhf|arm64)'
 SUPPORTED_DEBIAN_RELEASES='@(bullseye|bookworm|trixie)'
-SUPPORTED_UBUNTU_RELEASES='@(focal|jammy|noble)'
+SUPPORTED_UBUNTU_RELEASES='@(focal|jammy|noble|resolute)'
 
 SCRIPT_URL="https://repo.jellyfin.org/install-debuntu.sh"
 GPG_KEY_URL="https://repo.jellyfin.org/jellyfin_team.gpg.key"
