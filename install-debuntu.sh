@@ -276,14 +276,14 @@ echo
 # Install Jellyfin using the metapackage (which will fetch jellyfin-server, jellyfin-web, and jellyfin-ffmpeg[5]
 echo "> Installing Jellyfin."
 apt install --yes jellyfin
-# Works around https://github.com/jellyfin/jellyfin-packaging/issues/37 for now
-chown -R jellyfin:adm /etc/jellyfin
 # shellcheck disable=SC2181
 # We don't want to explicitly include the command in the 'if' for readability
 if [[ $? -gt 0 ]]; then
     echo "ERROR: Failed to install Jellyfin. Use ${CONTACT_URL} to find us for troubleshooting."
     exit 1
 fi
+# Works around https://github.com/jellyfin/jellyfin-packaging/issues/37 for now
+chown -R jellyfin:adm /etc/jellyfin
 echo
 
 # Wait for Jellyfin to actually start up, preempting quick users who might click the link below too quickly
