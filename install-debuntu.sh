@@ -147,8 +147,8 @@ else
     echo ">> OK: Data directory on ${DATA_FSTYPE}, this is supported."
 fi
 read TMP_FREE TMP_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype /tmp | tail -1 )"
-if [[ ${TMP_FREE} -lt $(( 2 * 1024 * 1024 )) ]]; then
-    echo "Insufficient free space for /tmp: ${TMP_FREE}KB found, $(( 2 * 1024 * 1024 ))KB required"
+if [[ ${TMP_FREE} -lt $(( 1024 * 1024 )) ]]; then
+    echo "Insufficient free space for /tmp: ${TMP_FREE}KB found, $(( 1024 * 1024 ))KB required"
     echo
     echo "Please increase tmpfs size or free up space and try again."
     exit 1
