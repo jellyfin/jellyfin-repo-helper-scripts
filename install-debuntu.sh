@@ -126,7 +126,7 @@ case "${REPO_OS}" in
     ;;
 esac
 
-# Perform free space checks on default locations (`/var/lib/jellyfin` and `/tmp`)
+# Perform free space checks on default locations (`/var/lib/jellyfin` and `$TMPDIR` or `/tmp`)
 echo "> Checking for free space and known-problematic filesystem targets."
 read DATA_FREE DATA_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype /var/lib | tail -1 )"
 if [[ ${DATA_FREE} -lt $(( 2 * 1024 * 1024 )) ]]; then
@@ -146,11 +146,15 @@ elif [[ " zfs btrfs bcachefs " =~ " ${DATA_FSTYPE} " ]]; then
 else
     echo ">> OK: Data directory on ${DATA_FSTYPE}, this is supported."
 fi
-read TMP_FREE TMP_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype /tmp | tail -1 )"
+# Honour TMPDIR so a small /tmp tmpfs can be sidestepped, but fall back to /tmp if it is
+# unset or points somewhere that does not exist, or df fails and the check misreads it.
+TMP_DIR="${TMPDIR}"
+[[ -d ${TMP_DIR} ]] || TMP_DIR="/tmp"
+read TMP_FREE TMP_FSTYPE <<< "$( df --block-size=1K --output=avail,fstype "${TMP_DIR}" | tail -1 )"
 if [[ ${TMP_FREE} -lt $(( 1024 * 1024 )) ]]; then
-    echo "Insufficient free space for /tmp: ${TMP_FREE}KB found, $(( 1024 * 1024 ))KB required"
+    echo "Insufficient free space for ${TMP_DIR}: ${TMP_FREE}KB found, $(( 1024 * 1024 ))KB required"
     echo
-    echo "Please increase tmpfs size or free up space and try again."
+    echo "Please increase tmpfs size, free up space, or point TMPDIR at a larger directory and try again."
     exit 1
 else
     echo ">> OK: Temporary directory has $(( ${TMP_FREE} / 1024 ))MB of available space."
